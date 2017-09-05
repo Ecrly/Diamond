@@ -6,5 +6,13 @@
 </head>
 <body>
     <header>haha</header>
+    <main>
+        <form enctype="multipart/form-data" action="/getimg/" method="post">
+             {% csrf_token %}
+            <input type="file" accept="image/*" name="image">
+            <input type="submit">
+        </form>
+    </main>
+    <footer>enen</footer>
 </body>
 </html>
