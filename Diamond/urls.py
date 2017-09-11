@@ -19,12 +19,14 @@ from django.contrib import admin
 from web.views import *
 from rest_api.urls import *
 from Diamond import settings
+from web.urls import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^web/', MainPage.index),
     url(r'^api/', include(api_patterns)),
     url(r'^getimg/', Img.img),
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
+    url(r'', include(web_patterns))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

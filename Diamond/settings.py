@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'web',
     'rest_api',
     'rest_framework',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE = [

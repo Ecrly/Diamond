@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
+    <header>
+        {% include 'main/header.html' %}
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 article-div">
+                    <center><a href="{% url 'article-instance' article.id %}" class="article-title"><h1 class="article-title">{{ article.title }}</h1></a></center>
+                    <br>
+                    <div class="article-info">
+                        <span><i class="fa fa-eye"></i>&nbsp;{{ article.views }}浏览 &emsp;</span>
+                        <span><i class="fa fa-bars"></i>&nbsp;{{ article.category }} &emsp;</span>
+                        <span><i class="fa fa-calendar"></i>&nbsp;{{ article.update_time }} &emsp;</span>
+                    </div>
+                    <div>{{ article.content| safe }}</div>
+                    <hr>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+            </div>
+
+    </header>
+{% endblock %}

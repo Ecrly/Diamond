@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/tether-theme-basic.min.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/css_header.css'%}">
+{% block style %}{% endblock %}
+<body>
+    {% block background %}{% endblock %}
+    <header>{% block header %}{% endblock %}</header>
+    <article>{% block article %}{% endblock %}</article>
+    <footer>{% block footer %}{% endblock %}</footer>
+</body>
+
+<script type="text/javascript" src="{% static 'jq/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/tether.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/js_scroll.js' %}"></script>
+{% block script %}{% endblock %}
+</html>

@@ -1,18 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>冰糖雪梨</title>
-</head>
-<body>
-    <header>haha</header>
-    <main>
-        <form enctype="multipart/form-data" action="/getimg/" method="post">
-             {% csrf_token %}
-            <input type="file" accept="image/*" name="image">
-            <input type="submit">
-        </form>
-    </main>
-    <footer>enen</footer>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}小王子呀{% endblock %}
+
+{% block style %}
+<style type="text/css" rel="stylesheet">
+    .background {
+        position: fixed;
+        top: 0;
+        z-index: -100;
+        opacity: 0.2;
+    }
+    #canvas{
+        position: fixed;
+        top: 0;
+        z-index: -1000;
+    }
+    .article-div{
+        overflow: hidden;
+    }
+
+    @keyframes title-before {
+        from{
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #000000;}
+        to{}
+    }
+    @keyframes title-after {
+        form{
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #000000;}
+        to{
+        color: #FFFFFF;
+        text-shadow: 0 0 10px #000000;}
+    }
+    @keyframes article-left {
+        from {}
+        to {left: 0;}
+    }
+    @keyframes article-right {
+        form {}
+        to {left: 0;}
+    }
+    .article-main{
+        overflow: hidden;
+    }
+    .article-slide:nth-child(2n){
+        position: relative;
+        left: -100%;
+{#        animation: article-left 2s;#}
+        animation-fill-mode: forwards;
+    }
+    .article-slide:nth-child(2n+1){
+        position: relative;
+        left: 200%;
+{#        animation: article-right 2s;#}
+        animation-fill-mode: forwards;
+    }
+    .add{
+        animation: article-right 2s;
+    }
+    .article-title{
+        padding-top: 10px;
+        text-decoration: none;
+        color: black;
+    }
+    .article-title:hover{
+        animation: 1s title-after;
+{#        animation-iteration-count: infinite;#}
+{#        animation-direction: alternate;#}
+        animation-fill-mode: forwards;
+
+        text-decoration: none;
+    }
+    .article-info{
+        text-align: center;
+        color: #999;
+        padding-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block background %}
+    <div class="background">
+        <img src="{% static 'img/bg.jpg' %}" width="100%">
+    </div>
+{% endblock %}
+
+{% block article %}
+    <article style="padding-top: 180px">
+        <div class="container article-main">
+        {% for article in article_list %}
+            <div class="row article-slide">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 article-div">
+                    <center><a href="{% url 'article-instance' article.id %}" class="article-title"><h1 class="article-title">{{ article.title }}</h1></a></center>
+                    <br>
+                    <div class="article-info">
+                        <span><i class="fa fa-eye"></i>&nbsp;{{ article.views }}浏览 &emsp;</span>
+                        <span><i class="fa fa-bars"></i>&nbsp;{{ article.category }} &emsp;</span>
+                        <span><i class="fa fa-calendar"></i>&nbsp;{{ article.update_time }} &emsp;</span>
+                    </div>
+                    <div>{{ article.abstract| safe }}</div>
+                    <hr>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+        {% endfor %}
+        </div>
+    </article>
+{% endblock %}
+
+{% block script %}
+    <script>
+    var article_list = $(".article-slide")
+        $(window).scroll(function(event){
+{#    var wScrollY = window.scrollY; // 当前滚动条位置#}
+{#    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）#}
+{#    var bScrollH = document.body.scrollHeight; // 滚动条总高度#}
+{#    if (wScrollY + wInnerH >= bScrollH - 50) {#}
+{#        alert("en")#}
+{#    }#}
+{#        var scollY = window.scrollY#}
+{#        var scollTop = $(document).scrollTop()#}
+{#        var innerHeight = window.innerHeight#}
+{#        var scollHeight = document.body.scrollHeight#}
+{#        console.log("scollTop " + scollTop + " scollHight " + scollHeight + " scollY" + scollY)#}
+            var window_height = window.innerHeight
+            var scroll_height = document.body.scrollHeight
+            var scrollTop = $(document).scrollTop()
+            for(var i in article_list){
+                var div = article_list[i]
+                var offsetH = div.offsetTop
+{#                console.log(window_height + " " + scroll_height + " " + offsetH + " " + scrollTop)#}
+                if(window_height - (offsetH - scrollTop) >= 100){
+                       $(div).addClass("add")
+                }
+            }
+});
+    </script>
+{% endblock %}
