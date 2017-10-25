@@ -21,20 +21,6 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'img', 'last_login')
 
 
-class ImageStore(models.Model):
-    name = models.CharField(max_length=30)
-    img = models.ImageField(upload_to='image')
-
-
-class Blog(models.Model):
-    name = models.CharField(max_length=30)
-    content = UEditorField(width=1280, height=800, toolbars='full', imagePath='newimg/', filePath='newfile/')
-
-
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'content')
-
-
 class Article(models.Model):
     STATUS_CHOICES = (
         ('d', 'part'),
@@ -42,12 +28,11 @@ class Article(models.Model):
     )
 
     title = models.CharField('标题', max_length=100)
-    content = UEditorField('内容',width=1280, height=800, toolbars='full', imagePath='img_article/', filePath='newfile/')
+    content = UEditorField('内容', width=1280, height=800, toolbars='full', imagePath='img_article/', filePath='newfile/')
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     update_time = models.DateTimeField('更新时间', auto_now=True)
     status = models.CharField('文章状态', choices=STATUS_CHOICES, max_length=1)
-    abstract = models.CharField('摘要', max_length=200, blank=True, null=True,
-                                help_text="选填")
+    abstract = UEditorField('内容', width=700, height=400, toolbars='full', imagePath='img_abstract/', filePath='newfile/')
     views = models.PositiveIntegerField('浏览量', default=0)
     likes = models.PositiveIntegerField('点赞数', default=0)
     top = models.BooleanField('置顶', default=False)
@@ -56,6 +41,15 @@ class Article(models.Model):
                                  on_delete=models.SET_NULL,
                                  to_field='name')
     tags = models.ManyToManyField('Tag', verbose_name='标签集合', blank=True)
+
+    class Meta:
+        ordering = ['-create_time']
+
+
+class ArticleAdmin(admin.ModelAdmin):
+
+    list_display = ('title', 'category', 'create_time', 'status')
+    search_fields = ('title',)
 
 
 class Category(models.Model):
@@ -76,9 +70,18 @@ class Tag(models.Model):
         return self.name
 
 
+class Sign(models.Model):
+    content = models.CharField('签名', max_length=200, unique=True)
+    created_time = models.DateTimeField('创建时间', auto_now_add=True)
+    update_time = models.DateTimeField('更新时间', auto_now=True)
+
+
+class SignAdmin(admin.ModelAdmin):
+    list_display = ('content', 'created_time', 'update_time')
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Blog, BlogAdmin)
-admin.site.register(Article)
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(Sign, SignAdmin)
 admin.site.register(Category)
 admin.site.register(Tag)
 

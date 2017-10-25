@@ -10,18 +10,6 @@ class UserViews(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class ImgViews(viewsets.ModelViewSet):
-
-    queryset = ImageStore.objects.all()
-    serializer_class = ImgSerializer
-
-
-class BlogView(viewsets.ModelViewSet):
-
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
-
-
 class ArticleView(viewsets.ModelViewSet):
 
     queryset = Article.objects.all()
@@ -37,3 +25,6 @@ class TagView(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
+class SignView(viewsets.ModelViewSet):
+    queryset = Sign.objects.all()
+    serializer_class = SignSerializer

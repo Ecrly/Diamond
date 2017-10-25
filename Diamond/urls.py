@@ -22,10 +22,10 @@ from Diamond import settings
 from web.urls import *
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^root/', admin.site.urls),
     url(r'^api/', include(api_patterns)),
-    url(r'^getimg/', Img.img),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
+    url(r'^avatar/', include('avatar.urls')),
     url(r'', include(web_patterns))
 ]
 

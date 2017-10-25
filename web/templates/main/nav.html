@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<style type="text/css" rel="stylesheet">
+    .nav-div:hover{
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    .nav-menu a:hover{
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    .conf-info a:hover{
+        color: black;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+</style>
+<div class="nav-div">
+    <span class="nav-span">MENU</span>
+</div>
+<div class="nav-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="nav-logo">
+                    <img class="nav-img" src="{% static 'img/6.jpg' %}" width="120px" height="120px">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="nav-sign"></div>
+            </div>
+        </div>
+        <div class="row conf-info">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3"><a href="https://github.com/dominose" target="_blank"><i class="fa fa-github"></i></a></div>
+            <div class="col-lg-4"><i class="fa fa-qq"></i></div>
+            <div class="col-lg-3"><i class="fa fa-weibo"></i></div>
+            <div class="col-lg-1"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="nav-menu">
+                    <ul>
+                        <a href="{% url 'web' %}"><li>主页</li></a>
+                        <a href="{% url 'archive' %}"><li>归档</li></a>
+                        <li>友链</li>
+                        <li>鸣谢</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row conf-theme">
+{#            <div>lalla</div>#}
+        </div>
+    </div>
+</div>

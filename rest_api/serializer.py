@@ -9,20 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ImgSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ImageStore
-        fields = '__all__'
-
-
-class BlogSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Blog
-        fields = '__all__'
-
-
 class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -42,3 +28,11 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
+
+
+class SignSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Sign
+        fields = '__all__'
+
