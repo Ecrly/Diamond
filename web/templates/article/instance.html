@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block style %}
+<style type="text/css" rel="stylesheet">
+    .article-title{
+        padding-top: 10px;
+        text-decoration: none;
+        color: black;
+        font-family: YouYuan;
+        font-weight: bold;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    .article-before-after
+    {
+{#        display: flex;#}
+{#        flex-direction: row;#}
+{#        justify-content: space-between;#}
+    }
+    .article-after-align{
+        text-align: right;
+    }
+    .article-after, .article-before{
+        padding: 5px 20px 5px 20px;
+    }
+    .article-after:hover, .article-before:hover{
+        border: solid 1px black;
+        border-radius: 10px;
+    }
+
+    a, a:hover, a:visited{
+        color: black;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+{% block article %}
+    <article style="padding-top: 180px">
+        <div class="container article-div">
+            <div class="row">
+                <div class="col-lg-2 article-left"></div>
+                <div class="col-lg-8 article-main">
+                    <center><h2><a href="{% url 'article-instance' article.id %}" class="article-title">{{ article.title }}</a></h2></center>
+                    <br>
+                    <div class="article-info">
+                        <span><i class="fa fa-eye"></i>&nbsp;{{ article.views }}浏览 &emsp;</span>
+                        <span><i class="fa fa-bars"></i>&nbsp;{{ article.category }} &emsp;</span>
+                        <span><i class="fa fa-calendar"></i>&nbsp;{{ article.update_time }} &emsp;</span>
+                    </div>
+                    <div class="article-content">{{ article.content| safe }}</div>
+                    <br>
+                    <div class="article-tags">
+                        标签：
+                        {% for tag in article.tags.all %}
+                            <div class="category-div"><a href="{% url 'archive-tag' tag.id %}"><span class="category-name"><i class="fa fa-tag"></i>&nbsp;&nbsp;{{ tag.name }}</span></a></div>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <div class="article-before-after row">
+                        <div class="col-lg-6">
+                            <span class="article-before">
+                                {% if article_before == None %}
+                                    没有上一篇了
+                                {% else %}
+                                    <a href="{% url 'article-instance' article_before.id %}"><i class="fa  fa-hand-o-left"></i>&emsp;{{ article_before.title }}</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="col-lg-6 article-after-align">
+                            <span class="article-after">
+                                {% if article_after == None %}
+                                    没有下一篇了
+                                {% else %}
+                                    <a href="{% url 'article-instance' article_after.id %}">{{ article_after.title }}&emsp;<i class="fa  fa-hand-o-right"></i> </a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-lg-2 article-right"></div>
+            </div>
+        </div>
+    </article>
+    <div class="img-div"></div>
+{% endblock %}

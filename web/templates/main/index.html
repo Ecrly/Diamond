@@ -1,10 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>冰糖雪梨</title>
-</head>
-<body>
-    <header>haha</header>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}小王子呀{% endblock %}
+{% block style %}
+<style type="text/css" rel="stylesheet">
+    .article-title{
+        padding-top: 10px;
+        text-decoration: none;
+        color: black;
+        font-family: YouYuan;
+        font-weight: bold;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    .article-category:hover{
+        text-decoration: none;
+        transition: color 1s;
+        color: #000000;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    .article-detail-btn{
+        width: 120px;
+        height:30px;
+        text-align: center;
+        border-radius: 20px;
+        border: dashed 1px #333333;
+        opacity: 0.3;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+        color: black;
+        background-color: white;
+    }
+    .background{
+        position: absolute;
+        top:0;
+        left:0;
+        background: url("{% static 'img/mao1.jpg' %}");
+        background-position: 50% 50% !important;
+        background-size: cover !important;
+        background-attachment: fixed;
+        width: 100%;
+        height: 500px;
+    }
+</style>
+{% endblock %}
+
+{% block background %}
+    <div class="background">
+{#        <img src="{% static 'img/mao1.jpg' %}" width="100%">#}
+{#    我的世界全黑了。。#}
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="div-before"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 article-left"></div>
+            <div class="col-lg-8">
+                <div class="content-before"><h3>{{ info_before }}</h3></div>
+            </div>
+            <div class="col-lg-2 article-right"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block article %}
+    <article>
+        <div class="container article-div">
+        {% for article in article_list %}
+            <div class="row article-slide">
+                <div class="col-lg-2 article-left"></div>
+                <div class="col-lg-8 article-main">
+                    <h2><a href="{% url 'article-instance' article.id %}" class="article-title">{{ article.title }}</a></h2>
+                    <br>
+                    <div class="article-info">
+                        <span><i class="fa fa-eye"></i>&nbsp;{{ article.views }}浏览 &emsp;</span>
+                        <span><i class="fa fa-bars"></i>&nbsp;<a href="{% url 'archive-category' article.category %}" class="article-category">{{ article.category }}</a> &emsp;</span>
+                        <span><i class="fa fa-calendar"></i>&nbsp;{{ article.update_time|date:"Y-m-d" }} &emsp;</span>
+                    </div>
+                    <div class="article-abstract">{{ article.abstract| safe }}</div>
+{#                    <br>#}
+                        <center><a href="{% url 'article-instance' article.id %}"><button class="article-detail-btn"><i class="fa fa-hand-pointer-o"></i></button></a></center>
+                    <hr>
+                </div>
+                <div class="col-lg-2 article-right"></div>
+            </div>
+        {% endfor %}
+        </div>
+    </article>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+    </script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block style %}
+    <style>
+    a{
+        color: black;
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: none;
+        color: hotpink;
+        cursor: url("{% static 'img/pointer.cur' %}"), default;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 article-left"></div>
+        <div class="col-lg-8">
+            <div class="padding-div"></div>
+            <div class="category-title"><h3>分类</h3></div>
+            <div class="category-all">
+                {% for category in category_list %}
+                    <div class="category-div"><a href="{% url 'archive-category' category.name %}"><span class="category-name"><i class="fa fa-bars"></i>&nbsp;&nbsp;{{ category.name }}&nbsp;({{ category.count }})</span></a></div>
+                {% endfor %}
+            </div>
+            <hr>
+        </div>
+        <div class="col-lg-2 article-right"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 article-left"></div>
+        <div class="col-lg-8">
+            <div class="category-title"><h3>标签</h3></div>
+            <div class="category-all">
+                {% for tag in tag_list %}
+                    <div class="category-div"><a href="{% url 'archive-tag' tag.id %}"><span class="category-name"><i class="fa fa-tag"></i>&nbsp;&nbsp;{{ tag.name }}&nbsp;({{ tag.count }})</span></a></div>
+                {% endfor %}
+            </div>
+        <hr>
+        </div>
+        <div class="col-lg-2 article-right"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 article-left"></div>
+        <div class="col-lg-8">
+            <div class="category-title"><h3>时光轴</h3></div>
+            <div class="time_box">
+                <div class="time_article">
+                    {% for article in article_list %}
+                        <div class="time_article_elem"><a href="{% url 'article-instance' article.id %}">{{ article.create_time|date:"Y-m-d" }}&emsp;{{ article.title }}</a></div>
+                    {% endfor %}
+                </div>
+            </div>
+        <hr>
+        </div>
+        <div class="col-lg-2 article-right"></div>
+
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+    <script>
+
+    </script>
+{% endblock %}

@@ -1,0 +1,113 @@
+	<style type="text/css" rel="stylesheet">
+		#canvas{
+			background-color: #FFFFFF;
+		}
+		body{
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		var Dot = function(id, x, y){
+			this.id = id
+			this.x = x
+			this.y = y
+			this.r = Math.random() * 5 +2
+			this.a = 0.5
+			this.aReduction = 0.01
+//			this.rgb = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + ","
+//			+ Math.random() * 255 + ","
+			this.rgb = "rgba(249,204,226,"
+			this.color = this.rgb +this.a + ")"
+			this.linecolor = this.rgb +this.a/20 + ")"
+			this.dirx = Math.random() > 0.5? 1: -1
+			
+			this.diry = Math.random() > 0.5? 1: -1
+		}
+		Dot.prototype.draw = function(){
+			cxt.fillStyle = this.color
+			cxt.beginPath()
+			cxt.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false)
+			cxt.closePath()
+			cxt.fill()
+		}
+		Dot.prototype.line = function(){
+			if(this.id == 0){
+//				alert("0")
+				 return;
+			}
+			cxt.beginPath()
+			cxt.strokeStyle = this.linecolor
+			cxt.moveTo(this.x, this.y)
+			for(var j in dots){
+				cxt.lineTo(dots[j].x, dots[j].y)
+			}
+			cxt.closePath()
+			cxt.stroke()
+		}
+		Dot.prototype.move = function(){
+			
+			this.a -= this.aReduction
+			if(this.a <= 0){
+				this.die()
+			}
+			this.x = this.x + Math.random()*this.dirx
+			this.y = this.y + Math.random()*this.diry
+			this.color = this.rgb +this.a + ")"
+			this.linecolor = this.rgb +this.a/20 + ")"
+			this.draw()
+			this.line()
+		}
+		Dot.prototype.die = function(){
+			dots[this.id] = null
+			delete dots[this.id]
+		}
+		Dot.prototype.getPreviousDot = function(){
+			if(dots[this.id - 1] == "undefined"){
+				alert("unn")
+				return false;
+			}
+			return dots[this.id - 1]
+		}
+		var x;
+		var y;
+		var m;
+		var mouse;
+		var canvas = document.getElementById("canvas")
+		canvas.width = window.innerWidth
+		canvas.height = window.innerHeight
+		var cxt = canvas.getContext("2d")
+		var dots = [];
+		
+		document.onmousemove = function(e){
+			mouse = true
+			var ax = Math.random() > 0.5 ? 1: -1
+			var ay = Math.random() > 0.5 ? 1: -1
+			x = e.clientX + Math.random() * 50 * ax
+			y = e.clientY + Math.random() * 50 * ay
+			clearInterval(m)
+			m = setTimeout(function(){
+				mouse = false
+			},500)
+		}
+		function drawif(){
+			if(!mouse) return;
+			if (dots.length == 0) {
+			dots[0] = new Dot(0,x,y);
+			dots[0].draw();
+			return;
+			}
+			var dot = new Dot(dots.length, x, y)
+			dots[dots.length] = dot
+			dots[dots.length - 1].draw()
+		}
+		function animate(){
+			cxt.clearRect(0, 0, canvas.width, canvas.height)
+			for(var i in dots){
+				dots[i].move()
+			}
+			drawif()
+    		requestAnimationFrame(animate);
+		}
+		animate()
+	</script>
